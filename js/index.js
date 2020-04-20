@@ -1,7 +1,5 @@
 var countries = [{
     "Country": "Niger",
-    "CountryCode": "NE",
-    "Slug": "niger",
     "NewConfirmed": 43,
     "TotalConfirmed": 627,
     "NewDeaths": 4,
@@ -12,8 +10,6 @@ var countries = [{
 },
 {
     "Country": "Nigeria",
-    "CountryCode": "NG",
-    "Slug": "nigeria",
     "NewConfirmed": 51,
     "TotalConfirmed": 493,
     "NewDeaths": 4,
@@ -21,9 +17,19 @@ var countries = [{
     "NewRecovered": 7,
     "TotalRecovered": 159,
     "Date": "2020-04-18T15:08:11Z"
-}];;
+}];
+var global = {
+    "NewConfirmed": 83608,
+    "TotalConfirmed": 2400051,
+    "NewDeaths": 5534,
+    "TotalDeaths": 165012,
+    "NewRecovered": 31584,
+    "TotalRecovered": 623259
+}
+
 var userInputBox = document.getElementById("userInput");
-var resultDiv = document.getElementById("result");
+var resultDiv = document.getElementById("searchResults");
+var globalUpdatesDiv = document.getElementById("globalUpdates");
 var searchResults = [];
 
 // var requestURL = 'https://api.covid19api.com/summary';
@@ -33,7 +39,17 @@ var searchResults = [];
 // request.send();
 // request.onload = function () {
 //     countries = request.response.Countries;
+//     global = request.response.Global;
 // }
+
+globalUpdatesDiv.appendChild(createParagraph("New Confirmed Cases: " + global.NewConfirmed));
+globalUpdatesDiv.appendChild(createParagraph("Total Confirmed Cases: " + global.TotalConfirmed));
+globalUpdatesDiv.appendChild(createParagraph("New Deaths: " + global.NewDeaths));
+globalUpdatesDiv.appendChild(createParagraph("Total Deaths: " + global.TotalDeaths));
+globalUpdatesDiv.appendChild(createParagraph("New Recoveries: " + global.NewRecovered));
+globalUpdatesDiv.appendChild(createParagraph("Total Recoveries: " + global.TotalRecovered));
+
+
 
 function search() {
     var userInput = trimAndToLowerCase(userInputBox.value);
@@ -42,23 +58,19 @@ function search() {
     resultDiv.innerHTML = "";
 
     if (isEmpty(userInput) == true) {
-        var newParagraph = document.createElement("p");
-        newParagraph.innerHTML = "Please enter a search value";
-        result.appendChild(newParagraph);
+        resultDiv.appendChild(createParagraph("Please enter a search value"));
     }
     else {
         countries.forEach(function (country) {
             if (trimAndToLowerCase(country.Country).includes(userInput)) {
                 searchResults.push(country);
-                country.Date = new Date(country.Date).toLocaleString() + " (Note that the date and time are automatically converted to match your local date and time)";
+                country.Date = new Date(country.Date).toLocaleString();
                 countryFound = true;
             }
         })
 
         if (countryFound == false) {
-            var newParagraph = document.createElement("p")
-            newParagraph.innerHTML = "No matches";
-            document.getElementById("result").appendChild(newParagraph)
+            resultDiv.appendChild(createParagraph("No matches"))
         }
 
         else {
@@ -70,6 +82,8 @@ function search() {
 
 
 function displaySearchResults() {
+    resultDiv.appendChild(createH2("Search Results"));
+    
     for (var i = 0; i < searchResults.length; i++) {
         var newDiv = document.createElement("div");
         newDiv.innerHTML = searchResults[i].Country;
@@ -83,14 +97,14 @@ function displaySearchResults() {
         newDiv.appendChild(hiddenValue);
         resultDiv.appendChild(newDiv);
 
+        // event listener that displays a country's stats when the view details button is clicked
         viewButton.addEventListener("click", function () {
             var chosenResult = this.parentElement;
             var countryIndex = chosenResult.getElementsByTagName("input")[0].value;
-            console.log(countryIndex);
-            console.log(chosenResult);
-            console.log(chosenResult);
             resultDiv.innerHTML = "";
 
+            
+            resultDiv.appendChild(createH2("COVID-19 in " + searchResults[countryIndex].Country));
             resultDiv.appendChild(createParagraph("Country Name: " + searchResults[countryIndex].Country));
             resultDiv.appendChild(createParagraph("New Confirmed Cases: " + searchResults[countryIndex].NewConfirmed));
             resultDiv.appendChild(createParagraph("Total Confirmed Cases: " + searchResults[countryIndex].TotalConfirmed));
@@ -99,8 +113,15 @@ function displaySearchResults() {
             resultDiv.appendChild(createParagraph("New Recoveries: " + searchResults[countryIndex].NewRecovered));
             resultDiv.appendChild(createParagraph("Total Recoveries: " + searchResults[countryIndex].TotalRecovered));
             resultDiv.appendChild(createParagraph("Result Timestamp: " + searchResults[countryIndex].Date));
+            resultDiv.appendChild(createParagraph("(Note that the date and time are automatically converted to match your local date and time)"));
         })
     }
+}
+
+function createH2(text){
+    var h2 = document.createElement("h2");
+    h2.innerHTML = text;
+    return h2;
 }
 
 function createParagraph(text) {

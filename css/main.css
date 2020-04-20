@@ -1,0 +1,27 @@
+html {
+    font-size: 1.1rem;
+}
+
+body{
+    padding-left: 20px;
+}
+
+
+#searchButton {
+    /* background-color: pink; */
+    padding: 10px 10px;
+    border: 1px solid gray;
+    border-radius: 5px;
+}
+
+#userInput {
+    padding: 10px 10px;
+    border: 1px solid gray;
+    border-radius: 5px;
+}
+
+/* #userInput:focus {
+    border: 1px solid pink;
+} */
+
+

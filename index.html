@@ -12,15 +12,18 @@
 
 <body>
     <header>
-        <h1>COVID-19 (CoronaVirus) Updates</h1>
+        <h1>COVID-19 Updates</h1>
     </header>
 
-    <main id="main">
+    <main>
         <div id="searchBar">
             <input type="text" id="userInput" placeholder="Search by country name">
-            <button onclick="search()">Search</button>
+            <button id="searchButton" onclick="search()">Search</button>
         </div>
-        <div id="result"></div>
+        <div id="searchResults"></div>
+        <div id="globalUpdates">
+            <h2>Global Statistics</h2>
+        </div>
     </main>
     <br>
     <br>
