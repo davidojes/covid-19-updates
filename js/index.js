@@ -30,16 +30,16 @@
 // }
 
 var countries = [];
-var global;
+var global = {};
 var userInputBox = document.getElementById("userInput");
 var searchButton = document.getElementById("searchButton");
-userInputBox.addEventListener( "keydown", function (key) {
+userInputBox.addEventListener("keydown", function (key) {
     if (key.keyCode == 13 && !key.shiftKey) {
-      // prevent default behavior
-      key.preventDefault();
-      searchButton.click();
+        // prevent default behavior
+        key.preventDefault();
+        searchButton.click();
     }
-  });
+});
 var resultDiv = document.getElementById("searchResults");
 var globalUpdatesDiv = document.getElementById("globalUpdates");
 var searchResults = [];
@@ -52,14 +52,16 @@ request.send();
 request.onload = function () {
     countries = request.response.Countries;
     global = request.response.Global;
+
+    globalUpdatesDiv.appendChild(createParagraph("New Confirmed Cases: " + global.NewConfirmed));
+    globalUpdatesDiv.appendChild(createParagraph("Total Confirmed Cases: " + global.TotalConfirmed));
+    globalUpdatesDiv.appendChild(createParagraph("New Deaths: " + global.NewDeaths));
+    globalUpdatesDiv.appendChild(createParagraph("Total Deaths: " + global.TotalDeaths));
+    globalUpdatesDiv.appendChild(createParagraph("New Recoveries: " + global.NewRecovered));
+    globalUpdatesDiv.appendChild(createParagraph("Total Recoveries: " + global.TotalRecovered));
 }
 
-globalUpdatesDiv.appendChild(createParagraph("New Confirmed Cases: " + global.NewConfirmed));
-globalUpdatesDiv.appendChild(createParagraph("Total Confirmed Cases: " + global.TotalConfirmed));
-globalUpdatesDiv.appendChild(createParagraph("New Deaths: " + global.NewDeaths));
-globalUpdatesDiv.appendChild(createParagraph("Total Deaths: " + global.TotalDeaths));
-globalUpdatesDiv.appendChild(createParagraph("New Recoveries: " + global.NewRecovered));
-globalUpdatesDiv.appendChild(createParagraph("Total Recoveries: " + global.TotalRecovered));
+
 
 
 
@@ -95,7 +97,7 @@ function search() {
 
 function displaySearchResults() {
     resultDiv.appendChild(createH2("Search Results"));
-    
+
     for (var i = 0; i < searchResults.length; i++) {
         var newDiv = document.createElement("div");
         newDiv.classList.add("search-result");
@@ -120,7 +122,7 @@ function displaySearchResults() {
             var countryIndex = chosenResult.getElementsByTagName("input")[0].value;
             resultDiv.innerHTML = "";
 
-            
+
             resultDiv.appendChild(createH2("COVID-19 in " + searchResults[countryIndex].Country));
             resultDiv.appendChild(createParagraph("Country Name: " + searchResults[countryIndex].Country));
             resultDiv.appendChild(createParagraph("New Confirmed Cases: " + searchResults[countryIndex].NewConfirmed));
@@ -129,25 +131,25 @@ function displaySearchResults() {
             resultDiv.appendChild(createParagraph("Total Deaths: " + searchResults[countryIndex].TotalDeaths));
             resultDiv.appendChild(createParagraph("New Recoveries: " + searchResults[countryIndex].NewRecovered));
             resultDiv.appendChild(createParagraph("Total Recoveries: " + searchResults[countryIndex].TotalRecovered));
-           console.log(searchResults[countryIndex].Date);
+            console.log(searchResults[countryIndex].Date);
             resultDiv.appendChild(createParagraph("Result Timestamp: " + searchResults[countryIndex].Date));
             resultDiv.appendChild(createParagraph("(Note that the date and time are automatically converted to match your local date and time)", "note"));
         })
     }
 }
 
-function convertDate(date){
+function convertDate(date) {
     tempDate = new Date(date);
     tempDate = tempDate.toLocaleString();
-    if(tempDate == "Invalid Date"){
+    if (tempDate == "Invalid Date") {
         return date;
     }
-    else{
+    else {
         return tempDate;
     }
 }
 
-function createH2(text){
+function createH2(text) {
     var h2 = document.createElement("h2");
     h2.innerHTML = text;
     return h2;
@@ -156,7 +158,7 @@ function createH2(text){
 function createParagraph(text, className) {
     let paragrapgh = document.createElement("p");
     paragrapgh.innerHTML = text;
-    if(className != undefined){
+    if (className != undefined) {
         paragrapgh.classList.add(className);
     }
     return paragrapgh;
