@@ -70,7 +70,8 @@ h1, h2 {
 }
 
 #userInput:focus {
-    border: 3px solid var(--pink);
+    border: 2px solid var(--pink);
+    outline: none;
 }
 
 .view-button{
