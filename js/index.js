@@ -1,32 +1,36 @@
-var countries = [{
-    "Country": "Niger",
-    "NewConfirmed": 43,
-    "TotalConfirmed": 627,
-    "NewDeaths": 4,
-    "TotalDeaths": 18,
-    "NewRecovered": 20,
-    "TotalRecovered": 110,
-    "Date": "2020-04-18T15:08:11Z"
-},
-{
-    "Country": "Nigeria",
-    "NewConfirmed": 51,
-    "TotalConfirmed": 493,
-    "NewDeaths": 4,
-    "TotalDeaths": 17,
-    "NewRecovered": 7,
-    "TotalRecovered": 159,
-    "Date": "2020-04-18T15:08:11Z"
-}];
-var global = {
-    "NewConfirmed": 83608,
-    "TotalConfirmed": 2400051,
-    "NewDeaths": 5534,
-    "TotalDeaths": 165012,
-    "NewRecovered": 31584,
-    "TotalRecovered": 623259
-}
+// test values to use in place of api
 
+// var countries = [{
+//     "Country": "Niger",
+//     "NewConfirmed": 43,
+//     "TotalConfirmed": 627,
+//     "NewDeaths": 4,
+//     "TotalDeaths": 18,
+//     "NewRecovered": 20,
+//     "TotalRecovered": 110,
+//     "Date": "2020-04-18T15:08:11Z"
+// },
+// {
+//     "Country": "Nigeria",
+//     "NewConfirmed": 51,
+//     "TotalConfirmed": 493,
+//     "NewDeaths": 4,
+//     "TotalDeaths": 17,
+//     "NewRecovered": 7,
+//     "TotalRecovered": 159,
+//     "Date": "2020-04-18T15:08:11Z"
+// }];
+// var global = {
+//     "NewConfirmed": 83608,
+//     "TotalConfirmed": 2400051,
+//     "NewDeaths": 5534,
+//     "TotalDeaths": 165012,
+//     "NewRecovered": 31584,
+//     "TotalRecovered": 623259
+// }
+
+var countries = [];
+var global;
 var userInputBox = document.getElementById("userInput");
 var searchButton = document.getElementById("searchButton");
 userInputBox.addEventListener( "keydown", function (key) {
@@ -40,15 +44,15 @@ var resultDiv = document.getElementById("searchResults");
 var globalUpdatesDiv = document.getElementById("globalUpdates");
 var searchResults = [];
 
-// var requestURL = 'https://api.covid19api.com/summary';
-// var request = new XMLHttpRequest();
-// request.open('GET', requestURL);
-// request.responseType = 'json';
-// request.send();
-// request.onload = function () {
-//     countries = request.response.Countries;
-//     global = request.response.Global;
-// }
+var requestURL = 'https://api.covid19api.com/summary';
+var request = new XMLHttpRequest();
+request.open('GET', requestURL);
+request.responseType = 'json';
+request.send();
+request.onload = function () {
+    countries = request.response.Countries;
+    global = request.response.Global;
+}
 
 globalUpdatesDiv.appendChild(createParagraph("New Confirmed Cases: " + global.NewConfirmed));
 globalUpdatesDiv.appendChild(createParagraph("Total Confirmed Cases: " + global.TotalConfirmed));
