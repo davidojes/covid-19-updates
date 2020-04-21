@@ -64,7 +64,7 @@ function search() {
         countries.forEach(function (country) {
             if (trimAndToLowerCase(country.Country).includes(userInput)) {
                 searchResults.push(country);
-                country.Date = new Date(country.Date).toLocaleString();
+                country.Date = convertDate(country.Date);
                 countryFound = true;
             }
         })
@@ -112,9 +112,21 @@ function displaySearchResults() {
             resultDiv.appendChild(createParagraph("Total Deaths: " + searchResults[countryIndex].TotalDeaths));
             resultDiv.appendChild(createParagraph("New Recoveries: " + searchResults[countryIndex].NewRecovered));
             resultDiv.appendChild(createParagraph("Total Recoveries: " + searchResults[countryIndex].TotalRecovered));
+           console.log(searchResults[countryIndex].Date);
             resultDiv.appendChild(createParagraph("Result Timestamp: " + searchResults[countryIndex].Date));
             resultDiv.appendChild(createParagraph("(Note that the date and time are automatically converted to match your local date and time)"));
         })
+    }
+}
+
+function convertDate(date){
+    tempDate = new Date(date);
+    tempDate = tempDate.toLocaleString();
+    if(tempDate == "Invalid Date"){
+        return date;
+    }
+    else{
+        return tempDate;
     }
 }
 

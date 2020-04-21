@@ -1,16 +1,31 @@
+:root {
+    --pink: #FA0D64;
+  }
+
 html {
     font-size: 1.1rem;
+    font-family: sans-serif;
+}
+
+a {
+    color: white;
 }
 
 body{
     padding-left: 20px;
+    background-color: #1c1b20;
+    color: white;
+}
+
+h1, h2 {
+    color: var(--pink);
 }
 
 
 #searchButton {
-    /* background-color: pink; */
+    background-color: var(--pink);
     padding: 10px 10px;
-    border: 1px solid gray;
+    border: 1px solid var(--pink);
     border-radius: 5px;
 }
 
