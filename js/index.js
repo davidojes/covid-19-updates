@@ -86,13 +86,18 @@ function displaySearchResults() {
     
     for (var i = 0; i < searchResults.length; i++) {
         var newDiv = document.createElement("div");
-        newDiv.innerHTML = searchResults[i].Country;
+        newDiv.classList.add("search-result");
+        var newSpan = document.createElement("span");
+        newSpan.innerHTML = searchResults[i].Country;
+        newSpan.classList.add("search-result-span");
         var hiddenValue = document.createElement("input");
         hiddenValue.hidden = true;
         hiddenValue.value = i;
         var viewButton = document.createElement("button");
-        viewButton.innerHTML = "View Details";
+        viewButton.innerHTML = "View Updates";
+        viewButton.classList.add("view-button")
 
+        newDiv.appendChild(newSpan);
         newDiv.appendChild(viewButton);
         newDiv.appendChild(hiddenValue);
         resultDiv.appendChild(newDiv);
