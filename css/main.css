@@ -1,5 +1,6 @@
 :root {
     --pink: #FA0D64;
+    --light-pink: #ff035f;
   }
 
 html {
@@ -17,8 +18,33 @@ body{
     color: white;
 }
 
+/* button:hover {
+    background-color: var(--light-pink);
+} */
+
+footer {
+    color: gray;
+}
+
+footer a {
+    color: gray;
+}
+
+footer a:hover {
+    color: white;
+}
+
+.footer-span {
+    display: block;
+    margin: 10px 0px;
+}
+
 h1, h2 {
     color: var(--pink);
+}
+
+.note {
+    font-style: italic;
 }
 
 .search-result {
@@ -43,9 +69,9 @@ h1, h2 {
     border-radius: 5px;
 }
 
-/* #userInput:focus {
-    border: 1px solid pink;
-} */
+#userInput:focus {
+    border: 3px solid var(--pink);
+}
 
 .view-button{
     background-color: var(--pink);

@@ -28,6 +28,14 @@ var global = {
 }
 
 var userInputBox = document.getElementById("userInput");
+var searchButton = document.getElementById("searchButton");
+userInputBox.addEventListener( "keydown", function (key) {
+    if (key.keyCode == 13 && !key.shiftKey) {
+      // prevent default behavior
+      key.preventDefault();
+      searchButton.click();
+    }
+  });
 var resultDiv = document.getElementById("searchResults");
 var globalUpdatesDiv = document.getElementById("globalUpdates");
 var searchResults = [];
@@ -70,7 +78,7 @@ function search() {
         })
 
         if (countryFound == false) {
-            resultDiv.appendChild(createParagraph("No matches"))
+            resultDiv.appendChild(createParagraph("No matches. Please use a different search term"))
         }
 
         else {
@@ -119,7 +127,7 @@ function displaySearchResults() {
             resultDiv.appendChild(createParagraph("Total Recoveries: " + searchResults[countryIndex].TotalRecovered));
            console.log(searchResults[countryIndex].Date);
             resultDiv.appendChild(createParagraph("Result Timestamp: " + searchResults[countryIndex].Date));
-            resultDiv.appendChild(createParagraph("(Note that the date and time are automatically converted to match your local date and time)"));
+            resultDiv.appendChild(createParagraph("(Note that the date and time are automatically converted to match your local date and time)", "note"));
         })
     }
 }
@@ -141,9 +149,12 @@ function createH2(text){
     return h2;
 }
 
-function createParagraph(text) {
+function createParagraph(text, className) {
     let paragrapgh = document.createElement("p");
     paragrapgh.innerHTML = text;
+    if(className != undefined){
+        paragrapgh.classList.add(className);
+    }
     return paragrapgh;
 }
 
