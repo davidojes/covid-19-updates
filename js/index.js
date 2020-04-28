@@ -1,6 +1,101 @@
 // test values to use in place of api
 
 // var countries = [{
+//     "Country": "Namibia",
+//     "CountryCode": "NA",
+//     "Slug": "namibia",
+//     "NewConfirmed": 0,
+//     "TotalConfirmed": 16,
+//     "NewDeaths": 0,
+//     "TotalDeaths": 0,
+//     "NewRecovered": 0,
+//     "TotalRecovered": 8,
+//     "Date": "2020-04-28T17:38:18Z"
+// },
+// {
+//     "Country": "Nauru",
+//     "CountryCode": "NR",
+//     "Slug": "nauru",
+//     "NewConfirmed": 0,
+//     "TotalConfirmed": 0,
+//     "NewDeaths": 0,
+//     "TotalDeaths": 0,
+//     "NewRecovered": 0,
+//     "TotalRecovered": 0,
+//     "Date": "2020-04-28T17:38:18Z"
+// },
+// {
+//     "Country": "Nepal",
+//     "CountryCode": "NP",
+//     "Slug": "nepal",
+//     "NewConfirmed": 0,
+//     "TotalConfirmed": 52,
+//     "NewDeaths": 0,
+//     "TotalDeaths": 0,
+//     "NewRecovered": 0,
+//     "TotalRecovered": 16,
+//     "Date": "2020-04-28T17:38:18Z"
+// },
+// {
+//     "Country": "Netherlands",
+//     "CountryCode": "NL",
+//     "Slug": "netherlands",
+//     "NewConfirmed": 400,
+//     "TotalConfirmed": 38440,
+//     "NewDeaths": 43,
+//     "TotalDeaths": 4534,
+//     "NewRecovered": 0,
+//     "TotalRecovered": 117,
+//     "Date": "2020-04-28T17:38:18Z"
+// },
+// {
+//     "Country": "Netherlands Antilles",
+//     "CountryCode": "AN",
+//     "Slug": "netherlands-antilles",
+//     "NewConfirmed": 0,
+//     "TotalConfirmed": 0,
+//     "NewDeaths": 0,
+//     "TotalDeaths": 0,
+//     "NewRecovered": 0,
+//     "TotalRecovered": 0,
+//     "Date": "2020-04-28T17:38:18Z"
+// },
+// {
+//     "Country": "New Caledonia",
+//     "CountryCode": "NC",
+//     "Slug": "new-caledonia",
+//     "NewConfirmed": 0,
+//     "TotalConfirmed": 0,
+//     "NewDeaths": 0,
+//     "TotalDeaths": 0,
+//     "NewRecovered": 0,
+//     "TotalRecovered": 0,
+//     "Date": "2020-04-28T17:38:18Z"
+// },
+// {
+//     "Country": "New Zealand",
+//     "CountryCode": "NZ",
+//     "Slug": "new-zealand",
+//     "NewConfirmed": 3,
+//     "TotalConfirmed": 1472,
+//     "NewDeaths": 0,
+//     "TotalDeaths": 19,
+//     "NewRecovered": 34,
+//     "TotalRecovered": 1214,
+//     "Date": "2020-04-28T17:38:18Z"
+// },
+// {
+//     "Country": "Nicaragua",
+//     "CountryCode": "NI",
+//     "Slug": "nicaragua",
+//     "NewConfirmed": 0,
+//     "TotalConfirmed": 13,
+//     "NewDeaths": 0,
+//     "TotalDeaths": 3,
+//     "NewRecovered": 0,
+//     "TotalRecovered": 7,
+//     "Date": "2020-04-28T17:38:18Z"
+// }, {
 //     "Country": "Niger",
 //     "NewConfirmed": 43,
 //     "TotalConfirmed": 627,
@@ -43,6 +138,15 @@ userInputBox.addEventListener("keydown", function (key) {
 var resultDiv = document.getElementById("searchResults");
 var globalUpdatesDiv = document.getElementById("globalUpdates");
 var searchResults = [];
+var resultGrid = document.getElementById("resultGrid");
+
+/* code only for testing */
+// globalUpdatesDiv.appendChild(createParagraph("New Confirmed Cases: " + global.NewConfirmed));
+// globalUpdatesDiv.appendChild(createParagraph("Total Confirmed Cases: " + global.TotalConfirmed));
+// globalUpdatesDiv.appendChild(createParagraph("New Deaths: " + global.NewDeaths));
+// globalUpdatesDiv.appendChild(createParagraph("Total Deaths: " + global.TotalDeaths));
+// globalUpdatesDiv.appendChild(createParagraph("New Recoveries: " + global.NewRecovered));
+// globalUpdatesDiv.appendChild(createParagraph("Total Recoveries: " + global.TotalRecovered));
 
 var requestURL = 'https://api.covid19api.com/summary';
 var request = new XMLHttpRequest();
@@ -70,6 +174,7 @@ function search() {
     var countryFound = false;
     searchResults = [];
     resultDiv.innerHTML = "";
+    resultGrid.style.display = "none";
 
     if (isEmpty(userInput) == true) {
         resultDiv.appendChild(createParagraph("Please enter a search value"));
@@ -94,36 +199,39 @@ function search() {
 
 }
 
-
 function displaySearchResults() {
-    resultDiv.appendChild(createH2("Search Results"));
+    resultGrid.innerHTML = "";
+    resultDiv.innerHTML = "";
+    resultGrid.style.display = "grid";
 
     for (var i = 0; i < searchResults.length; i++) {
-        var newDiv = document.createElement("div");
-        newDiv.classList.add("search-result");
-        var newSpan = document.createElement("span");
-        newSpan.innerHTML = searchResults[i].Country;
-        newSpan.classList.add("search-result-span");
+        var countryName = document.createElement("span");
+        countryName.innerHTML = searchResults[i].Country;
+        countryName.classList.add("grid-item");
+
         var hiddenValue = document.createElement("input");
         hiddenValue.hidden = true;
         hiddenValue.value = i;
         var viewButton = document.createElement("button");
         viewButton.innerHTML = "View Updates";
-        viewButton.classList.add("view-button")
+        viewButton.classList.add("view-button");
+        var buttonSpan = document.createElement("span");
+        buttonSpan.classList.add("grid-item");
+        buttonSpan.appendChild(hiddenValue);
+        buttonSpan.appendChild(viewButton);
 
-        newDiv.appendChild(newSpan);
-        newDiv.appendChild(viewButton);
-        newDiv.appendChild(hiddenValue);
-        resultDiv.appendChild(newDiv);
+        resultGrid.appendChild(countryName);
+        resultGrid.appendChild(buttonSpan);
 
         // event listener that displays a country's stats when the view details button is clicked
         viewButton.addEventListener("click", function () {
             var chosenResult = this.parentElement;
             var countryIndex = chosenResult.getElementsByTagName("input")[0].value;
-            resultDiv.innerHTML = "";
+            resultGrid.style.display = "none";
 
-
-            resultDiv.appendChild(createH2("COVID-19 in " + searchResults[countryIndex].Country));
+            var h2 = document.createElement("h2");
+            h2.innerHTML = "COVID-19 in " + searchResults[countryIndex].Country;
+            resultDiv.appendChild(h2);
             resultDiv.appendChild(createParagraph("Country Name: " + searchResults[countryIndex].Country));
             resultDiv.appendChild(createParagraph("New Confirmed Cases: " + searchResults[countryIndex].NewConfirmed));
             resultDiv.appendChild(createParagraph("Total Confirmed Cases: " + searchResults[countryIndex].TotalConfirmed));
@@ -147,12 +255,6 @@ function convertDate(date) {
     else {
         return tempDate;
     }
-}
-
-function createH2(text) {
-    var h2 = document.createElement("h2");
-    h2.innerHTML = text;
-    return h2;
 }
 
 function createParagraph(text, className) {

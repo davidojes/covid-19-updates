@@ -34,6 +34,10 @@ footer a:hover {
     color: white;
 }
 
+.footer-link {
+    font-weight: bold;
+}
+
 .footer-span {
     display: block;
     margin: 10px 0px;
@@ -78,9 +82,28 @@ h1, h2 {
     background-color: var(--pink);
     border: 1px solid var(--pink);
     border-radius: 3px;
-    padding: 5px 5px;
+    padding: 7px 10px;
 }
 
+/* grid */
+#resultGrid {
+    display: none;
+    width: 400px;
+    grid-template-columns: auto 140px;
+    margin-top: 30px;
+}
+
+.grid-item {
+    margin-bottom: 15px;
+}
+
+
+@media(max-width: 400px){
+    #resultGrid {
+        width: 300px;
+        grid-template-columns: auto 140px;
+    }
+}
 
 @media(max-width: 565px){
 
@@ -92,8 +115,11 @@ h1, h2 {
         padding-left: 10px;
     }
 
+    
+
     #userInput {
         width: 60%;
     }
+
 }
 
