@@ -100,6 +100,7 @@ function displaySearchResults() {
             var h2 = document.createElement("h2");
             h2.innerHTML = "COVID-19 in " + searchResults[countryIndex].Country;
             resultDiv.appendChild(h2);
+            userInputBox.value = searchResults[countryIndex].Country;
             // resultDiv.appendChild(createParagraph("Country Name: " + searchResults[countryIndex].Country));
             resultDiv.appendChild(createParagraph("New Confirmed Cases: " + searchResults[countryIndex].NewConfirmed));
             resultDiv.appendChild(createParagraph("Total Confirmed Cases: " + searchResults[countryIndex].TotalConfirmed));
