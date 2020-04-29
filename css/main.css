@@ -43,7 +43,11 @@ footer a:hover {
     margin: 10px 0px;
 }
 
-h1, h2 {
+h1 {
+    font-size: 1.5em;
+}
+
+h1, h3 {
     color: var(--pink);
 }
 
@@ -100,7 +104,7 @@ h1, h2 {
 
 @media(max-width: 400px){
     #resultGrid {
-        width: 300px;
+        width: 325px;
         grid-template-columns: auto 140px;
     }
 }

@@ -81,7 +81,7 @@ function displaySearchResults() {
         hiddenValue.hidden = true;
         hiddenValue.value = i;
         var viewButton = document.createElement("button");
-        viewButton.innerHTML = "View Updates";
+        viewButton.innerHTML = "View Stats";
         viewButton.classList.add("view-button");
         var buttonSpan = document.createElement("span");
         buttonSpan.classList.add("grid-item");
@@ -97,7 +97,7 @@ function displaySearchResults() {
             var countryIndex = chosenResult.getElementsByTagName("input")[0].value;
             resultGrid.style.display = "none";
 
-            var h2 = document.createElement("h2");
+            var h2 = document.createElement("h3");
             h2.innerHTML = "COVID-19 in " + searchResults[countryIndex].Country;
             resultDiv.appendChild(h2);
             userInputBox.value = searchResults[countryIndex].Country;
