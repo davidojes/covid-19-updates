@@ -15,15 +15,14 @@ var globalUpdatesDiv = document.getElementById("globalUpdates");
 var searchResults = [];
 var resultGrid = document.getElementById("resultGrid");
 
-/* request to get current stats */
-var requestURL = 'https://api.covid19api.com/summary';
-var request = new XMLHttpRequest();
-request.open('GET', requestURL);
-request.responseType = 'json';
-request.send();
-request.onload = function () {
-    countries = request.response.Countries;
-    global = request.response.Global;
+fetch('https://api.covid19api.com/summary')
+    .then(response => response.json())
+    .then(response => render(response.Countries, response.Global))
+
+
+function render(countriesInput, globalInput) {
+    countries = countriesInput;
+    global = globalInput;
 
     globalUpdatesDiv.appendChild(createParagraph("New Confirmed Cases: " + global.NewConfirmed));
     globalUpdatesDiv.appendChild(createParagraph("Total Confirmed Cases: " + global.TotalConfirmed));
@@ -32,6 +31,24 @@ request.onload = function () {
     globalUpdatesDiv.appendChild(createParagraph("New Recoveries: " + global.NewRecovered));
     globalUpdatesDiv.appendChild(createParagraph("Total Recoveries: " + global.TotalRecovered));
 }
+
+/* request to get current stats */
+// var requestURL = 'https://api.covid19api.com/summary';
+// var request = new XMLHttpRequest();
+// request.open('GET', requestURL);
+// request.responseType = 'json';
+// request.send();
+// request.onload = function () {
+//     countries = request.response.Countries;
+//     global = request.response.Global;
+
+//     globalUpdatesDiv.appendChild(createParagraph("New Confirmed Cases: " + global.NewConfirmed));
+//     globalUpdatesDiv.appendChild(createParagraph("Total Confirmed Cases: " + global.TotalConfirmed));
+//     globalUpdatesDiv.appendChild(createParagraph("New Deaths: " + global.NewDeaths));
+//     globalUpdatesDiv.appendChild(createParagraph("Total Deaths: " + global.TotalDeaths));
+//     globalUpdatesDiv.appendChild(createParagraph("New Recoveries: " + global.NewRecovered));
+//     globalUpdatesDiv.appendChild(createParagraph("Total Recoveries: " + global.TotalRecovered));
+// }
 
 
 
